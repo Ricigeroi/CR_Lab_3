@@ -1,43 +1,43 @@
 import string
-
 import encrypt
 import decrypt
 
 
-def check_input(user_input):
-    user_input = user_input.split()
-    if len(user_input) == 3:
-        mode, text, key = user_input[0], user_input[1], user_input[2]
-
-        if mode in ['e', 'd']:
-            if text.isalpha():
-                if key.isalpha() and len(key) >= 7:
-                    return mode, text, key
-                else:
-                    print("Invalid key format")
-            else:
-                print("Invalid text format")
-        else:
-            print("Invalid mode (encrypt/decrypt)")
-
-    print('Invalid input error.')
+def check_input_mode(s):
+    if s in ['e', 'd']:
+        return s
+    print("Invalid mode (encrypt/decrypt)")
     raise TypeError
 
-print('\n\n\n')
+
+def check_text(s):
+    s = encrypt.remove_spaces(s)
+    if s.isalpha():
+        return s
+    print("Invalid input text")
+    print("\n<text> contains only 'a'-'z' and 'A'-'Z'")
+    raise TypeError
+
+
+def check_key(s):
+    s = encrypt.remove_spaces(s)
+    if s.isalpha() and len(s) >= 7:
+        return s
+    print("Invalid key")
+    print("<key> contains only 'a'-'z' and 'A'-'Z' and key length >= 7")
+    raise TypeError
+
+
 print('CR Laboratory #3: Playfair algorithm')
 print('====================================')
-print('To ENCRYPT enter:')
-print('\t\te <text> <key>')
+print("To ENCRYPT enter 'e'")
+print("To DECRYPT enter 'd'")
 
-print('To DECRYPT enter:')
-print('\t\td <text> <key>')
 
-print("\n<text> contains only 'a'-'z' and 'A'-'Z' \n<key> length >= 7")
+mode = check_input_mode(str(input('\n>>> ')))
+text = check_text(str(input("Enter plain text: ")))
+key = check_key(str(input("Enter key: ")))
 print('====================================')
-user_input = str(input('>>> '))
-
-mode, text, key = check_input(user_input)
-
 if mode == 'e':
     print(encrypt.encrypt_playfair(text, key))
 else:

@@ -154,7 +154,7 @@ def encrypt_playfair(text, key):
     if len(plain_text_list[-1]) != 2:
         plain_text_list[-1] = plain_text_list[-1] + 'z'
 
-    key = "First Amendment"
+    print("Text to encrypt:", text)
     print("Key text:", key)
     key = remove_spaces(to_lower_case(key))
     matrix = generate_key_table(key, list1)
